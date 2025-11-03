@@ -10,3 +10,4 @@ Nov 3:
     - `/model/Task.java` (A `Task` class mapped to DB table using JPA annotation)
     - `/repository/TaskRepository.java` (To perform data access from SQL table directly using `JpaRepository` class methods)
     - `/controller/TaskController.java` (Different CRUD operations functionalities via registered APIs)
+    - `TaskManagerApplication.java` (Performs booting and setting up everything)
