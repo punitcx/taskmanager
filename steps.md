@@ -56,7 +56,7 @@ spring.jpa.show-sql=true
 
 ### 5. Create the `Task` entity in DB (using JPA, Java Persistence API)
 - Java Persistent API is used to map Java objects to SQL tables.
-> Task.java
+> src/main/java/com/example/taskmanager/model/Task.java
 ```
 package com.example.taskmanager.model;
 
@@ -85,3 +85,79 @@ public class Task {
 - @GeneratedValue → auto-increment ID
 - Lombok’s @Data → saves you from writing boilerplate (getters/setters).
 When you run your app, JPA will create a task table automatically in your DB.
+
+### 6. Create Repository (Data Access Layer)
+> src/main/java/com/example/taskmanager/repository/TaskRepository.java
+```
+package com.example.taskmanager.repository;
+
+import com.example.taskmanager.model.Task;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TaskRepository extends JpaRepository<Task, Long> {
+}
+```
+- You don’t have to write SQL.
+- JpaRepository already gives you:
+  - save(), findAll(), findById(), deleteById() — etc.
+
+### 7. Create the Controller (API endpoints)
+> src/main/java/com/example/taskmanager/controller/TaskController.java
+```
+package com.example.taskmanager.controller;
+
+import com.example.taskmanager.model.Task;
+import com.example.taskmanager.repository.TaskRepository;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@RestController
+@RequestMapping("/tasks")
+public class TaskController {
+
+    private final TaskRepository repository;
+
+    public TaskController(TaskRepository repository) {
+        this.repository = repository;
+    }
+
+    @GetMapping
+    public List<Task> getAllTasks() {
+        return repository.findAll();
+    }
+
+    @PostMapping
+    public Task createTask(@RequestBody Task task) {
+        return repository.save(task);
+    }
+
+    @GetMapping("/{id}")
+    public Task getTask(@PathVariable Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    @PutMapping("/{id}")
+    public Task updateTask(@PathVariable Long id, @RequestBody Task updated) {
+        return repository.findById(id).map(task -> {
+            task.setTitle(updated.getTitle());
+            task.setDescription(updated.getDescription());
+            task.setCompleted(updated.isCompleted());
+            return repository.save(task);
+        }).orElse(null);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTask(@PathVariable Long id) {
+        repository.deleteById(id);
+    }
+}
+```
+| Annotation                                                        | Purpose                                                |
+| ----------------------------------------------------------------- | ------------------------------------------------------ |
+| `@RestController`                                                 | Tells Spring this class handles HTTP requests          |
+| `@RequestMapping("/tasks")`                                       | Base URL for all endpoints inside                      |
+| `@GetMapping` / `@PostMapping` / `@PutMapping` / `@DeleteMapping` | Map to HTTP methods                                    |
+| `@RequestBody`                                                    | Automatically converts JSON from request → Java object |
+| `@PathVariable`                                                   | Extracts `{id}` part from URL                          |
+
+### 8. Test with Postman or Curl
