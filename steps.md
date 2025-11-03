@@ -43,7 +43,7 @@ public class HelloController {
 | Delete   | `DELETE`    | `/tasks/{id}` | Remove a task           |
 
 ### 4. Now lets add the support for PostgreSQL database.
-- Open src/main/resources/application.properties and add the following:
+- Open `src/main/resources/application.properties` and add the following:
 ```
 spring.datasource.url=jdbc:postgresql://localhost:5432/taskdb
 spring.datasource.username=postgres
@@ -54,7 +54,7 @@ spring.jpa.show-sql=true
 - ddl-auto=update → automatically creates/updates tables based on your classes.
 - show-sql=true → prints SQL queries to your terminal (great for learning).
 
-### Create the `Task` entity in DB (using JPA, Java Persistence API)
+### 5. Create the `Task` entity in DB (using JPA, Java Persistence API)
 - Java Persistent API is used to map Java objects to SQL tables.
 > Task.java
 ```
