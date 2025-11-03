@@ -168,4 +168,6 @@ public class TaskController {
 | **Controller**      | Handles API calls   | `TaskController`         |
 | **Spring Boot App** | Boots everything    | `TaskmanagerApplication` |
 
-`Frontend API Call -> Controller(calls correct CRUD operation) -> Repository(Performs the operation by interacting with DB) -> Returns the response -> Controller -> Frontend.`
+`Frontend API Call -> Controller(calls correct CRUD operation) -> Repository(Performs the operation by interacting with DB) -> Returns the response -> Controller -> Frontend.
+<img width="1756" height="1000" alt="image" src="https://github.com/user-attachments/assets/13150c90-1308-4ac9-a43e-028e7be24865" />
+
