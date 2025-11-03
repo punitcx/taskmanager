@@ -160,4 +160,12 @@ public class TaskController {
 | `@RequestBody`                                                    | Automatically converts JSON from request → Java object |
 | `@PathVariable`                                                   | Extracts `{id}` part from URL                          |
 
-### 8. Test with Postman or Curl
+### 8. Summary (Now Test with Postman or Curl)
+| Layer               | Purpose             | Example                  |
+| ------------------- | ------------------- | ------------------------ |
+| **Model**           | Represents DB table | `Task.java`              |
+| **Repository**      | Talks to DB         | `TaskRepository`         |
+| **Controller**      | Handles API calls   | `TaskController`         |
+| **Spring Boot App** | Boots everything    | `TaskmanagerApplication` |
+
+`Frontend API Call -> Controller(calls correct CRUD operation) -> Repository(Performs the operation by interacting with DB) -> Returns the response -> Controller -> Frontend.`
