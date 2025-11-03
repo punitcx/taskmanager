@@ -1,5 +1,5 @@
 # Task-Manager
-My first microservices application as I transition to SDE.
+My first backend microservices application as I transition to SDE.
 
 Progress:
 
