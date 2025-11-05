@@ -84,6 +84,7 @@ public class Task {
 - @Id → mark it as a primary Key
 - @GeneratedValue → auto-increment ID
 - Lombok’s @Data → saves you from writing boilerplate (getters/setters).
+
 When you run your app, JPA will create a task table automatically in your DB.
 
 ### 6. Create Repository (Data Access Layer)
