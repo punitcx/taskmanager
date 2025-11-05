@@ -8,7 +8,7 @@ Nov 3:
 - Initialized the project and created a Hello Controller(/hello).
 - Added `com/example/taskmanager/`:
     - `/model/Task.java` (A `Task` class mapped to DB table using JPA annotation)
-    - `/repository/TaskRepository.java` (To perform data access from SQL table directly using `JpaRepository` class methods)
+    - `/repository/TaskRepository.java` (To perform database handling directly using `JpaRepository` class methods, which handles the SQL queries for common CRUD operations internally)
     - `/controller/TaskController.java` (Different CRUD operations functionalities via registered APIs)
     - `TaskManagerApplication.java` (Performs booting and setting up everything)
  
