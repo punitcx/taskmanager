@@ -14,3 +14,6 @@ Nov 3:
  
 Nov 4:
 <img width="1793" height="1035" alt="image" src="https://github.com/user-attachments/assets/ec818965-af5a-43d9-aec5-75b91f63cae3" />
+
+Nov 5:
+Studied the JPA annotations: @Entity, @Data, @RestController, @RequestMapping, @RequestBody, @PathVariable etc...
