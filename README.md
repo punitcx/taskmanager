@@ -17,3 +17,7 @@ Nov 4:
 
 Nov 5:
 - Studied the JPA annotations: @Entity, @Data, @NoArgsConstructor, @AllArgsConstructor, @Id, @GeneratedValue, @RestController, @RequestMapping, @GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @RequestBody, @PathVariable etc...
+
+Nov 6:
+- Added `com/example/taskmanager/`:
+    - `TaskService.Java` (The repository handling code is being shifted from controller to this class)
