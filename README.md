@@ -20,4 +20,4 @@ Nov 5:
 
 Nov 6:
 - Added `com/example/taskmanager/`:
-    - `TaskService.Java` (The repository handling code is being shifted from controller to this class)
+    - `service/TaskService.Java` (The repository handling code is being shifted from controller to this class)
