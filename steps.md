@@ -55,7 +55,8 @@ spring.jpa.show-sql=true
 - show-sql=true → prints SQL queries to your terminal (great for learning).
 
 ### 5. Create the `Task` entity in DB (using JPA, Java Persistence API)
-- Java Persistent API is used to map Java objects to SQL tables.
+- Java Persistent API is a specification - a set of rules telling how Java objects should be saved to and loaded from the database.
+- Hibernate is used by default in Spring Boot to implement JPA.
 > src/main/java/com/example/taskmanager/model/Task.java
 ```
 package com.example.taskmanager.model;
