@@ -173,3 +173,51 @@ public class TaskController {
 `Frontend API Call -> Controller(calls correct CRUD operation) -> Repository(Performs the operation by interacting with DB) -> Returns the response -> Controller -> Frontend.
 <img width="1756" height="1000" alt="image" src="https://github.com/user-attachments/assets/13150c90-1308-4ac9-a43e-028e7be24865" />
 
+### 9. Create a separate service to interact with the repository(modify controller as well)
+> src/main/java/com/example/taskmanager/service/TaskService.java
+```
+package com.example.taskmanager.service;
+
+import com.example.taskmanager.model.Task;
+import com.example.taskmanager.repository.TaskRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class TaskService {
+
+    private final TaskRepository repository;
+
+    public TaskService(TaskRepository repository){
+        this.repository = repository;
+    }
+
+    public List<Task> getAllTasks(){
+        return repository.findAll();
+    }
+
+    public Optional<Task> getTaskById(Long id) {
+        return repository.findById(id);
+    }
+
+    public Task createTask(Task task){
+        return repository.save(task);
+    }
+
+    public Task updateTask(Long id, Task updated){
+        return repository.findById(id).map(existing -> {
+            existing.setTitle(updated.getTitle());
+            existing.setDescription(updated.getDescription());
+            existing.setCompleted(updated.isCompleted());
+            return repository.save(existing);
+        }).orElseThrow(() -> new RuntimeException("Task Not Found"));
+    }
+
+    public void deleteTask(Long id){
+        repository.deleteById(id);
+    }
+}
+```
+- Frontend(Postman) -> Controller -> Service -> Repository -> DB Access -> Repository -> Service -> Controller -> Frontend(Postman)
