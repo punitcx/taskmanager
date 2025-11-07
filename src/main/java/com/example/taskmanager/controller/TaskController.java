@@ -1,7 +1,7 @@
 package com.example.taskmanager.controller;
 
 import com.example.taskmanager.model.Task;
-import com.example.taskmanager.repository.TaskRepository;
+import com.example.taskmanager.service.TaskService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -9,40 +9,35 @@ import java.util.List;
 @RequestMapping("/tasks")
 public class TaskController {
 
-    private final TaskRepository repository;
+    private final TaskService service;
 
-    public TaskController(TaskRepository repository) {
-        this.repository = repository;
+    public TaskController(TaskService service) {
+        this.service = service;
     }
 
     @GetMapping
     public List<Task> getAllTasks() {
-        return repository.findAll();
+        return service.getAllTasks();
     }
 
     @PostMapping
     public Task createTask(@RequestBody Task task) {
-        return repository.save(task);
+        return service.createTask(task);
     }
 
     @GetMapping("/{id}")
-    public Task getTask(@PathVariable Long id) {
-        return repository.findById(id).orElse(null);
+    public Task getTaskById(@PathVariable Long id) {
+        return service.getTaskById(id).orElseThrow(() -> new RuntimeException("Task Not Found"));
     }
 
     @PutMapping("/{id}")
     public Task updateTask(@PathVariable Long id, @RequestBody Task updated) {
-        return repository.findById(id).map(task -> {
-            task.setTitle(updated.getTitle());
-            task.setDescription(updated.getDescription());
-            task.setCompleted(updated.isCompleted());
-            return repository.save(task);
-        }).orElse(null);
+        return service.updateTask(id, updated);
     }
 
     @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable Long id) {
-        repository.deleteById(id);
+        service.deleteTask(id);
     }
 }
 
