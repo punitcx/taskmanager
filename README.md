@@ -20,7 +20,8 @@ Nov 5:
 
 Nov 6:
 - Added `com/example/taskmanager/`:
-    - `service/TaskService.Java` (The repository handling part created as a separate service)
+    - `service/TaskService.Java` (Separated the service part to interact with repository)
 
 Nov 7:
 - Tested the functionalities using **Postman**
+- Studied MVC Architecture
