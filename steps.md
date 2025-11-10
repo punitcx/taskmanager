@@ -221,3 +221,70 @@ public class TaskService {
 }
 ```
 - Frontend(Postman) -> Controller -> Service -> Repository -> DB Access -> Repository -> Service -> Controller -> Frontend(Postman)
+
+### 10. What if something wrong happens?
+- Add a custom exception and a global exception handler
+> src/main/java/com/example/taskmanager/exception/ResourceNotFoundException.java
+```
+package com.example.taskmanager.exception;
+
+public class ResourceNotFoundException extends RuntimeException {
+    public ResourceNotFoundException(String message) {
+        super(message);
+    }
+}
+```
+- Update the service class(getTaskById or updateTask etc.) to throw `new ResourceNotFoundException` instead of `new RuntimeException` with our custom, nice message.
+> src/main/java/com/example/taskmanager/exception/GlobalExceptionHandler.java
+```
+package com.example.taskmanager.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+
+@ControllerAdvice
+public class GlobalExceptionHandler{
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Object> handleResourceNotFound(ResourceNotFoundException ex, WebRequest request){
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp",LocalDateTime.now());
+        body.put("status", HttpStatus.NOT_FOUND.value());
+        body.put("error", "Not Found");
+        body.put("message", ex.getMessage());
+        body.put("path", request.getDescription(false));
+
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<Object> handleGenericException(Exception ex, WebRequest request){
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp",LocalDateTime.now());
+        body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        body.put("error", "Internal Server Error");
+        body.put("message", ex.getMessage());
+        body.put("path", request.getDescription(false));
+
+        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+}
+```
+- How will we(developers) know that something wrong has happened?..Add simple logging using `slf4j` in the `TaskService` class.
+```
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+// --------- Declaration
+    private static final Logger logger = LoggerFactory.getLogger(TaskService.class);
+// Use
+   public Task getTaskById(Long id) {
+        logger.info("Fetching task with id: {}", id);
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task not found with ID:" + id));
+    }
+```

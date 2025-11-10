@@ -25,3 +25,10 @@ Nov 6:
 Nov 7:
 - Tested the functionalities using **Postman**
 - Studied MVC Architecture
+
+Nov 11:
+- Added exception handling with `com/example/taskmanager/`:
+    - `exception/ResourceNotFoundException.java`
+    - `exception/GlobalExceptionHandler.java`
+- Added simple `slf4j` logging for info and warn messages (in `TaskService.java`)
+  <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/c07ba85f-b2c5-4b47-bd41-e91f6b2b3fcf" />
