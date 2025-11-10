@@ -27,7 +27,7 @@ public class TaskController {
 
     @GetMapping("/{id}")
     public Task getTaskById(@PathVariable Long id) {
-        return service.getTaskById(id).orElseThrow(() -> new RuntimeException("Task Not Found"));
+        return service.getTaskById(id);
     }
 
     @PutMapping("/{id}")
