@@ -25,6 +25,3 @@ Nov 6:
 Nov 7:
 - Tested the functionalities using **Postman**
 - Studied MVC Architecture
-
-Nov 8,9:
-- 
