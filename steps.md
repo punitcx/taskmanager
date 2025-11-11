@@ -288,3 +288,59 @@ import org.slf4j.LoggerFactory;
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task not found with ID:" + id));
     }
 ```
+
+### 11. Add DTOs + Validation (Incoming task data)
+> dto/TaskRequestDTO.java
+```
+package com.example.taskmanager.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+
+@Data
+public class TaskRequestDTO{
+    @NotBlank(message = "Title is required")
+    @Size(max = 100, message = "Title cannot exceed 100 characters")
+    private String title;
+
+    @Size(max = 500, message = "Description cannot exceed 500 characters")
+    private String description;
+}
+
+```
+> dto/TaskResponseDTO.java
+```
+package com.example.taskmanager.dto;
+
+import lombok.Data;
+
+@Data
+public class TaskResponseDTO {
+    private Long id;
+    private String title;
+    private String description;
+    private boolean completed;
+}
+```
+- Update the controller by adding validation on incoming data (`TaskRequestDTO`) using the @Valid annotation.
+- Add the following method in the global exception handler to handle this new exception (`MethodArgumentNotValidException`)
+```
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex, WebRequest request){
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp",LocalDateTime.now());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("error", "Validation Error");
+        body.put("message", ex.getMessage());
+        body.put("path", request.getDescription(false));
+
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+```
+| Concept                      | Purpose                                     | Key Point                               |
+| ---------------------------- | ------------------------------------------- | --------------------------------------- |
+| **Request DTO**              | Receive client input                        | Often validated using `@Valid`          |
+| **Response DTO**             | Send curated data back                      | Hides sensitive or unnecessary info     |
+| **@Valid**                   | Triggers validation on request objects      | Uses Hibernate Validator under the hood |
+| **Global Exception Handler** | Central place for clean JSON error messages | Catches validation errors automatically |
