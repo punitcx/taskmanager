@@ -32,3 +32,8 @@ Nov 11:
     - `exception/GlobalExceptionHandler.java`
 - Added simple `slf4j` logging for info and warn messages (in `TaskService.java`)
   <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/c07ba85f-b2c5-4b47-bd41-e91f6b2b3fcf" />
+- Added DTOs:
+    - `dto/TaskRequestDTO`
+    - `dto/TaskResponseDTO`
+- Added data validation using `@Valid` annotation on incoming data(`TaskRequestDTO`)
+- Updated the global exception handler to handle data validation exception (`MethodArgumentNotValidException`)
