@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("/api/tasks")
 public class TaskController {
 
     private final TaskService service;
@@ -30,7 +30,7 @@ public class TaskController {
         Task task = new Task();
         task.setTitle(taskDTO.getTitle());
         task.setDescription(taskDTO.getDescription());
-
+        task.setCompleted(taskDTO.isCompleted());
         Task savedTask = service.createTask(task);
 
         TaskResponseDTO responseDTO = new TaskResponseDTO();
@@ -43,13 +43,34 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public Task getTaskById(@PathVariable Long id) {
-        return service.getTaskById(id);
+    public ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable Long id) {
+        Task taskById = service.getTaskById(id);
+
+        TaskResponseDTO responseDTO = new TaskResponseDTO();
+        responseDTO.setId(taskById.getId());
+        responseDTO.setTitle(taskById.getTitle());
+        responseDTO.setDescription(taskById.getDescription());
+        responseDTO.setCompleted(taskById.isCompleted());
+
+        return ResponseEntity.ok(responseDTO);
     }
 
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable Long id, @RequestBody Task updated) {
-        return service.updateTask(id, updated);
+    public ResponseEntity<TaskResponseDTO> updateTask(@PathVariable Long id, @Valid @RequestBody TaskRequestDTO updatedDTO) {
+        Task task = new Task();
+        task.setTitle(updatedDTO.getTitle());
+        task.setDescription(updatedDTO.getDescription());
+        task.setCompleted(updatedDTO.isCompleted());
+
+        Task savedTask = service.updateTask(id, task);
+
+        TaskResponseDTO responseDTO = new TaskResponseDTO();
+        responseDTO.setId(savedTask.getId());
+        responseDTO.setTitle(savedTask.getTitle());
+        responseDTO.setDescription(savedTask.getDescription());
+        responseDTO.setCompleted(savedTask.isCompleted());
+
+        return ResponseEntity.ok(responseDTO);
     }
 
     @DeleteMapping("/{id}")
