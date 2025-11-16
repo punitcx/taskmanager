@@ -1,6 +1,5 @@
 # Task-Manager
-My first backend microservices application as I transition to SDE.
-
+A multi-user task management system backend application with Spring Boot and Java based tech stack.
 **Progress:**
 
 Nov 3:
