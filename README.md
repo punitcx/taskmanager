@@ -37,3 +37,7 @@ Nov 11:
     - `dto/TaskResponseDTO`
 - Added data validation using `@Valid` annotation on incoming data(`TaskRequestDTO`)
 - Updated the global exception handler to handle data validation exception (`MethodArgumentNotValidException`)
+
+Nov 12-16:
+- Added User and UserRepository for multi-user app support.
+- Added email, passwordHash, role fields.
