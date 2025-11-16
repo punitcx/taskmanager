@@ -344,3 +344,6 @@ public class TaskResponseDTO {
 | **Response DTO**             | Send curated data back                      | Hides sensitive or unnecessary info     |
 | **@Valid**                   | Triggers validation on request objects      | Uses Hibernate Validator under the hood |
 | **Global Exception Handler** | Central place for clean JSON error messages | Catches validation errors automatically |
+
+### 12. Add User and UserRepository
+- Added User.java and UserRepository.java with email, passwordHash, role to be used for authentication and authorization part later.
