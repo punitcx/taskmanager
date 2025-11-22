@@ -1,5 +1,5 @@
 # Task-Manager
-A multi-user task management system backend application with Spring Boot and Java based tech stack.
+A multi-user task management system backend application made with Spring Boot and Java based tech stack.
 **Progress:**
 
 Nov 3:
